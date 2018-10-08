@@ -10,14 +10,11 @@ namespace Decorator_Pattern
     {
         static void Main(string[] args)
         {
-            Widget demo;
+            Widget box = new TextField(50, 50);
 
-            TextField box = new TextField(50, 50);
-            BorderDecorator boxBorder = new BorderDecorator(box);
-            ScrollDecorator boxScroll = new ScrollDecorator(boxBorder);
-            ButtonDecorator boxButton = new ButtonDecorator(boxScroll);
+            Decorator decoBox = new BorderDecorator(new ScrollDecorator(new ButtonDecorator(box)));
 
-            boxScroll.draw();
+            decoBox.draw();
 
             Console.ReadKey();
         }
@@ -25,7 +22,7 @@ namespace Decorator_Pattern
 
     interface Widget
     {
-        void draw();
+         void draw();
     }
 
     abstract class Decorator : Widget
@@ -36,7 +33,10 @@ namespace Decorator_Pattern
         }
 
 
-        abstract public void draw();
+        public virtual void draw()
+        {
+            wid.draw();
+        }
       
         private Widget wid;
     }
@@ -51,7 +51,7 @@ namespace Decorator_Pattern
 
         public void draw()
         {
-            Console.WriteLine("I am a Textfield ");
+            Console.WriteLine("I am a Textfield, holding a");
         }
 
         private int width;
@@ -65,9 +65,10 @@ namespace Decorator_Pattern
 
         }
 
-        override public void draw()
+        public override void draw()
         {
-            Console.WriteLine("I am a border decorator");
+            base.draw();
+            Console.WriteLine("I am a border decorator, holding a");
         }
     }
 
@@ -78,9 +79,10 @@ namespace Decorator_Pattern
 
         }
 
-        override public void draw()
+        public override void draw()
         {
-            Console.WriteLine("I am a scroll decorator");
+            base.draw();
+            Console.WriteLine("I am a scroll decorator, holding a");
         }
     }
 
@@ -91,9 +93,10 @@ namespace Decorator_Pattern
 
         }
 
-        override public void draw()
+        public override void draw()
         {
-            Console.WriteLine("I am a button decorator");
+            base.draw();
+            Console.WriteLine("I am a button decorator, holding a");
         }
     }
 }
